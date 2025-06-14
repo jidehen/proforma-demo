@@ -1,7 +1,7 @@
 {
   "name": "proforma-prompt-tester",
   "version": "1.0.0",
-  "description": "Testing tool for rental property pro forma calculations using LLM system prompts",
+  "description": "Testing tool for rental property pro forma calculations using LLM system prompts with A2A protocol",
   "author": "Your Name",
   "license": "MIT",
   "scripts": {
@@ -9,7 +9,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "start-agents": "python3 agents/start_agents.py",
+    "start-proforma-agent": "python3 agents/proforma_agent.py",
+    "start-viz-agent": "python3 agents/visualization_agent.py"
   },
   "dependencies": {
     "next": "^14.0.0",

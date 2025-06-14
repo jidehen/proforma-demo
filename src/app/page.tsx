@@ -13,12 +13,15 @@ export default function Home() {
   const [inputData, setInputData] = useState(DEFAULT_INPUT);
   const [output, setOutput] = useState<ProFormaOutput | null>(null);
   const [loading, setLoading] = useState(false);
+  const [visualization, setVisualization] = useState<string | null>(null);
 
   const runTest = async () => {
     setLoading(true);
+    setVisualization(null);
+    setOutput(null);
     
     try {
-      const response = await fetch('/api/calculate', {
+      const response = await fetch('/api/proforma', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -35,8 +38,9 @@ export default function Home() {
       }
 
       const result = await response.json();
-      setOutput(result);
-      toast.success('Pro forma generated successfully!');
+      setOutput(result.proforma);
+      setVisualization(result.visualization);
+      toast.success('Pro forma generated successfully via A2A agents!');
     } catch (error: any) {
       toast.error(error.message || 'An error occurred');
       console.error('Error:', error);
@@ -51,6 +55,7 @@ export default function Home() {
       systemPrompt,
       input: inputData,
       output,
+      visualization,
     };
 
     const blob = new Blob([JSON.stringify(data, null, 2)], {
@@ -76,14 +81,14 @@ export default function Home() {
             Pro Forma System Prompt Tester
           </h1>
           <p className="text-gray-600 mb-4">
-            Test your rental property pro forma calculator system prompt
+            Test your rental property pro forma calculator system prompt using A2A Protocol
           </p>
           <div className="flex items-center gap-2 text-sm">
             <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full">
-              Using Ollama (Local)
+              Using A2A Agents
             </span>
             <span className="text-gray-500">
-              Free MVP testing with local LLM
+              Two distinct AI agents communicating via A2A Protocol
             </span>
           </div>
         </div>
@@ -114,7 +119,7 @@ export default function Home() {
                 : 'bg-blue-600 text-white hover:bg-blue-700'
             }`}
           >
-            {loading ? 'Processing...' : 'Run Test'}
+            {loading ? 'Processing via A2A...' : 'Run Test'}
           </button>
 
           {output && (
@@ -129,18 +134,29 @@ export default function Home() {
 
         {/* Output Display */}
         {output && (
-          <OutputDisplay output={output} />
+          <>
+            <OutputDisplay output={output} />
+            {visualization && (
+              <div className="mt-8 bg-white rounded-lg shadow-lg p-6">
+                <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+                  A2A Visualization Agent Output
+                </h2>
+                <div dangerouslySetInnerHTML={{ __html: visualization }} />
+              </div>
+            )}
+          </>
         )}
 
         {/* Info Box */}
         <div className="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-4">
-          <h3 className="font-semibold text-blue-900 mb-2">Quick Start Guide</h3>
+          <h3 className="font-semibold text-blue-900 mb-2">A2A Setup Guide</h3>
           <ol className="list-decimal list-inside text-sm text-blue-800 space-y-1">
             <li>Make sure Ollama is running: <code className="bg-blue-100 px-1 rounded">ollama serve</code></li>
-            <li>Install a model if needed: <code className="bg-blue-100 px-1 rounded">ollama pull mistral</code></li>
+            <li>Install required models: <code className="bg-blue-100 px-1 rounded">ollama pull mistral && ollama pull qwen2.5:3b</code></li>
+            <li>Install Python dependencies: <code className="bg-blue-100 px-1 rounded">pip install -r agents/requirements.txt</code></li>
+            <li>Start A2A agents: <code className="bg-blue-100 px-1 rounded">npm run start-agents</code></li>
             <li>Edit the system prompt or input data as needed</li>
-            <li>Click "Run Test" to generate the pro forma</li>
-            <li>Download results for documentation</li>
+            <li>Click "Run Test" to see both agents work together</li>
           </ol>
         </div>
       </div>
