@@ -1,0 +1,40 @@
+{
+  "name": "proforma-prompt-tester",
+  "version": "1.0.0",
+  "description": "Testing tool for rental property pro forma calculations using LLM system prompts",
+  "author": "Your Name",
+  "license": "MIT",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next": "^14.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "openai": "^4.20.0",
+    "@monaco-editor/react": "^4.6.0",
+    "tailwindcss": "^3.3.0",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.31",
+    "clsx": "^2.0.0",
+    "react-hot-toast": "^2.4.1",
+    "zustand": "^4.4.7",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.9.0",
+    "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.15",
+    "typescript": "^5.2.2",
+    "eslint": "^8.53.0",
+    "eslint-config-next": "^14.0.0",
+    "@tailwindcss/forms": "^0.5.7"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
